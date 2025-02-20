@@ -1,0 +1,29 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Login page</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div id="content" class="text-center">
+    <ion-label class="text-gray-400 text-lg font-semibold">Iniciar Sesión</ion-label><br>
+
+    <ion-label class="text-gray-400 text-lg font-semibold">Email</ion-label><br>
+    <input class="border rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400" #emailInput
+      type="email" required placeholder="Ingresa tu correo"><br>
+
+    <ion-label class="text-gray-400 text-lg font-semibold">Contraseña</ion-label><br>
+    <input class="border rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400" #passInput
+      type="password" required placeholder="Ingresa tu contraseña"><br><br>
+
+    <button
+      class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-semibold font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
+      expand="full" type="submit">Iniciar Sesión</button>
+
+    <p class="mt-2">
+      <a href="/forgot-password" class="text-blue-600 hover:underline">¿Olvidaste tu contraseña?</a><br>
+      <a href="/sign-up" class="text-blue-600 hover:underline">Registrate</a>
+    </p>
+  </div>
+
+</ion-content>
