@@ -3,6 +3,7 @@ import { IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonHeader, IonToo
 import { OpenaiService } from '../openai.service';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgModule } from '@angular/core';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',

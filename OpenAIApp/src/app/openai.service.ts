@@ -6,7 +6,7 @@ import axios from 'axios';
 })
 export class OpenaiService {
   private apiKey: string = '';
-
+  //puse mi apikey en un docs en la misma asignacion de classroom
   constructor() { }
 
   async generateIdea(prompt: string): Promise<string> {
