@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonToolbar, IonTitle, IonInput, IonItem, IonList, IonLabel, IonButton } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { AuthService } from '../auth.service';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.page.html',
@@ -12,13 +13,37 @@ import { AlertController } from '@ionic/angular';
   imports: [FormsModule, CommonModule, IonContent, IonHeader, IonToolbar, IonTitle, IonInput, IonItem, IonList, IonLabel, IonButton]
 })
 export class SignUpPage implements OnInit {
+  email: string = ' ';
+  password: string = ' ';
 
-  constructor(private alertController: AlertController, private router: Router) { }
+  constructor(private authService: AuthService, private alertController: AlertController, private router: Router) { }
 
   ngOnInit() {
   }
 
+
   async onSubmit() {
+    try {
+      await this.authService.register(this.email, this.password);
+      const alert = await this.alertController.create({
+        header: 'Signup Success',
+        message: 'You have signed up successfully!',
+        buttons: ['OK'],
+      });
+      await alert.present();
+      this.router.navigate(['/login']);
+    } catch (error) {
+      const alert = await this.alertController.create({
+        header: 'Error',
+        message: 'An error ocurred during signup.',
+        buttons: ['OK'],
+      });
+      await alert.present();
+    }
+
+
+    /*
+    Funcion de la EA12
     const email = (document.getElementById('email') as HTMLInputElement).value;
     const password = (document.getElementById('password') as HTMLInputElement).value;
 
@@ -36,7 +61,7 @@ export class SignUpPage implements OnInit {
         buttons: ['OK'],
       });
       await alert.present();
-    }
+    }*/
   }
 
   validateEmail(email: string): boolean {
