@@ -35,7 +35,7 @@ export class SignUpPage implements OnInit {
     } catch (error) {
       const alert = await this.alertController.create({
         header: 'Error',
-        message: 'An error ocurred during signup.',
+        message: 'An error ocurred during signup.', //nose porque siempre me aparece que ocurre un error durante el signup, pero ya esta implementado todo lo de Firebase y deberia servir
         buttons: ['OK'],
       });
       await alert.present();
