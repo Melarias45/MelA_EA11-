@@ -11,9 +11,11 @@
 
       <!-- Input de Email -->
       <ion-label class="text-gray-400 text-lg font-semibold">Email</ion-label><br>
+
       <input class="border rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400" type="email"
-        name="email" id="email" required placeholder="email@gmail.com" [(ngModel)]="email" #email="ngModel"><br><br>
-      <div *ngIf="email.invalid && email.touched" style="color:red;">Please enter a valid email</div>
+        name="email" id="email" required placeholder="email@gmail.com" [(ngModel)]="email" #emailModel="ngModel" email>
+      <div *ngIf="emailModel.invalid && emailModel.touched" style="color:red;">Please enter a valid email</div><br>
+
 
 
 
@@ -26,9 +28,14 @@
 
       <!-- Input de Contraseña -->
       <ion-label class="text-gray-400 text-lg font-semibold">Contraseña</ion-label><br>
-      <input name="password" id="password" [(ngModel)]="password" #password="ngModel"
+
+      <input name="password" id="password" [(ngModel)]="password" #passwordModel="ngModel"
         class="border rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400" type="password" required
-        placeholder="........."><br><br>
+        minlength="6" placeholder=".........">
+      <div *ngIf="passwordModel.invalid && passwordModel.touched" style="color:red;">
+        La contraseña debe tener al menos 6 caracteres.
+      </div><br><br>
+
 
 
 
