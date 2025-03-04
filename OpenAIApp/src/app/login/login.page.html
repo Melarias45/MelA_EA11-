@@ -7,23 +7,24 @@
 <ion-content [fullscreen]="true">
   <div id="content" class="text-center">
     <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
-
       <ion-label class="text-gray-400 text-lg font-semibold">Iniciar Sesión</ion-label><br>
-      <!--Email aqui-->
+
+      <!-- Email -->
       <ion-label class="text-gray-400 text-lg font-semibold">Email</ion-label><br>
       <input class="border rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400" type="email"
-        name="email" id="email" required placeholder="email@gmail.com" ngModel #email="ngModel"><br>
-      <div *ngIf="email.invalid && email.touched" style="color:red;">Please enter a valid email</div>
-      <!--Password aqui-->
+        name="email" id="email" required placeholder="email@gmail.com" [(ngModel)]="email" #emailModel="ngModel"><br>
+      <div *ngIf="emailModel.invalid && emailModel.touched" style="color:red;">Please enter a valid email</div>
+
+      <!-- Contraseña -->
       <ion-label class="text-gray-400 text-lg font-semibold">Contraseña</ion-label><br>
-      <input name="password" id="password" ngModel
+      <input name="password" id="password" [(ngModel)]="password"
         class="border rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400" type="password" required
         placeholder="........."><br><br>
-      <!--Boton aqui-->
+
+      <!-- Botón de Iniciar Sesión -->
       <button
         class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-semibold font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
         expand="full" type="submit" [disabled]="loginForm.invalid">Iniciar Sesión</button>
-
     </form>
 
     <button (click)="onReset()"

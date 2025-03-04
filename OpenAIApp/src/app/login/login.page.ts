@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonToolbar, IonTitle, IonInput, IonItem, IonList, IonLabel, IonButton } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { AuthService } from '../auth.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -12,32 +13,45 @@ import { AlertController } from '@ionic/angular';
   imports: [IonLabel, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonInput, IonItem, IonList, IonLabel, IonButton]
 })
 export class LoginPage implements OnInit {
+  email: string = '';
+  password: string = '';
 
-  constructor(private alertController: AlertController, private router: Router) { }
+  constructor(private alertController: AlertController, private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
   }
 
   async onSubmit() {
-    const email = (document.getElementById('email') as HTMLInputElement).value;
-    const password = (document.getElementById('password') as HTMLInputElement).value;
-
-    if (this.validateEmail(email) && password) {
+    if (!this.validateEmail(this.email) || !this.password) {
       const alert = await this.alertController.create({
-        header: 'Login Success',
-        message: 'You have logged in successfully!',
+        header: 'Error',
+        message: 'Por favor, ingresa un correo y una contraseña válidos.',
         buttons: ['OK'],
       });
       await alert.present();
-    } else {
+      return;
+    }
+
+    try {
+      await this.authService.login(this.email, this.password); // Llamamos al método de login del servicio
+      const alert = await this.alertController.create({
+        header: 'Inicio de Sesión Exitoso',
+        message: '¡Bienvenido!',
+        buttons: ['OK'],
+      });
+      await alert.present();
+      this.router.navigate(['/home']); // Redirige a la página de inicio
+    } catch (error) {
+      console.error('Error en login:', error);
       const alert = await this.alertController.create({
         header: 'Error',
-        message: 'Please check your credentials.',
+        message: 'Correo o contraseña incorrectos. Verifica tus credenciales.',
         buttons: ['OK'],
       });
       await alert.present();
     }
   }
+
 
   validateEmail(email: string): boolean {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zAZ0-0.-]+\.[a-zA-Z]{2,}$/;
@@ -45,10 +59,10 @@ export class LoginPage implements OnInit {
   }
 
   onSignup() {
-    this.router.navigateByUrl("sign-up")
+    this.router.navigate(['/sign-up']);
   }
 
   onReset() {
-    this.router.navigateByUrl("forgot-password")
+    this.router.navigate(['/forgot-password']);
   }
 }
