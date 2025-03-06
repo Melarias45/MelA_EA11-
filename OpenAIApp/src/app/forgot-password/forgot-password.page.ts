@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { IonContent, IonHeader, IonToolbar, IonTitle, IonInput, IonItem, IonList, IonLabel, IonButton } from '@ionic/angular/standalone';
-
+import { AuthService } from '../auth.service';
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.page.html',
@@ -14,26 +14,38 @@ import { IonContent, IonHeader, IonToolbar, IonTitle, IonInput, IonItem, IonList
 })
 export class ForgotPasswordPage implements OnInit {
 
-  constructor(private alertController: AlertController, private router: Router) { }
+  email: string = '';
+
+  constructor(private authService: AuthService, private alertController: AlertController, private router: Router) { }
 
   ngOnInit() {
   }
 
   async onSubmit() {
-    const email = (document.getElementById('email') as HTMLInputElement).value;
-    const password = (document.getElementById('password') as HTMLInputElement).value;
-
-    if (this.validateEmail(email) && password) {
+    if (!this.validateEmail(this.email)) {
       const alert = await this.alertController.create({
-        header: 'Password Reset',
-        message: 'Your password has been reset successfully!',
+        header: 'Error',
+        message: 'Por favor, ingresa un correo válido.',
         buttons: ['OK'],
       });
       await alert.present();
-    } else {
+      return;
+    }
+
+    try {
+      await this.authService.resetPassword(this.email);
+      const alert = await this.alertController.create({
+        header: 'Correo Enviado',
+        message: 'Revisa tu correo para restablecer tu contraseña.',
+        buttons: ['OK'],
+      });
+      await alert.present();
+      this.router.navigate(['/login']);
+    } catch (error) {
+      console.error('Error al enviar correo de restablecimiento:', error);
       const alert = await this.alertController.create({
         header: 'Error',
-        message: 'Please complete all.',
+        message: 'No se pudo enviar el correo. Verifica que el email esté registrado.',
         buttons: ['OK'],
       });
       await alert.present();
